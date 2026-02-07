@@ -1,0 +1,46 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Welcome to BlueCraeft Bowl!</h1>
+    <p class="lead">The ultimate parlay game for family and friends.</p>
+    
+    <div class="mt-5">
+        @if (User.Identity?.IsAuthenticated != true)
+        {
+            <div class="card shadow-sm mx-auto" style="max-width: 400px;">
+                <div class="card-body">
+                    <h5 class="card-title">Join the Game</h5>
+                    <p class="card-text">Sign in with your Google account to start making your predictions.</p>
+                    <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Sign In / Register</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Leaderboard</h5>
+                            <p class="card-text">Check the current standings and see who's winning!</p>
+                            <a class="btn btn-outline-primary" asp-page="/Leaderboard">View Standings</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">My Selections</h5>
+                            <p class="card-text">Make or update your parlay picks before the game starts.</p>
+                            <a class="btn btn-primary" asp-page="/Parlays/Index">Go to Selections</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

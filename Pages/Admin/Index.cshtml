@@ -1,0 +1,40 @@
+@page
+@model BlueCraeftBowl.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <h1>Admin Dashboard</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">User Management</h5>
+                    <p class="card-text">Activate/Deactivate participants.</p>
+                    <a asp-page="./Users" class="btn btn-primary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Parlay Management</h5>
+                    <p class="card-text">Create and edit parlay items.</p>
+                    <a asp-page="./Parlays" class="btn btn-primary">Manage Parlays</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Game Control</h5>
+                    <p class="card-text">Lock selections and enter results.</p>
+                    <a asp-page="./Control" class="btn btn-warning">Control Game</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

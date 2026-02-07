@@ -1,0 +1,53 @@
+@page
+@model BlueCraeftBowl.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="container mt-4">
+    <h2>User Management</h2>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Active</th>
+                <th>Admin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.FullName</td>
+                    <td>@(user.IsActive ? "Yes" : "No")</td>
+                    <td>@(user.IsAdmin ? "Yes" : "No")</td>
+                    <td>
+                        <form method="post" class="d-inline">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            @if (user.Email == "admin@bluecraeftbowl.com")
+                            {
+                                <button type="button" class="btn btn-sm btn-success" disabled title="Default admin cannot be deactivated">Active</button>
+                            }
+                            else if (!user.IsActive)
+                            {
+                                <button type="submit" asp-page-handler="ToggleActive" class="btn btn-sm btn-success">Activate</button>
+                            }
+                            else
+                            {
+                                <button type="submit" asp-page-handler="ToggleActive" class="btn btn-sm btn-danger">Deactivate</button>
+                            }
+                            
+                            @if (user.Email != "admin@bluecraeftbowl.com" && !user.IsAdmin)
+                            {
+                                <button type="submit" asp-page-handler="ToggleAdmin" class="btn btn-sm btn-outline-primary">Make Admin</button>
+                            }
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

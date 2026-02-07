@@ -1,0 +1,67 @@
+@page
+@model BlueCraeftBowl.Pages.Admin.ControlModel
+@{
+    ViewData["Title"] = "Game Control";
+}
+
+<div class="container mt-4">
+    <h2>Game Control</h2>
+    
+    <div class="card my-4">
+        <div class="card-body">
+            <h5>Status: @(Model.Session?.IsLocked == true ? "LOCKED" : "OPEN")</h5>
+            <form method="post" asp-page-handler="ToggleLock">
+                <button type="submit" class="btn @(Model.Session?.IsLocked == true ? "btn-success" : "btn-danger")">
+                    @(Model.Session?.IsLocked == true ? "Unlock Selections" : "Lock Selections")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <h3>Enter Results</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Result</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Question</td>
+                    <td>
+                        <form method="post" asp-page-handler="Resolve" asp-route-id="@item.Id" class="row g-2">
+                            <div class="col-auto">
+                                @if (item.Type == BlueCraeftBowl.Models.ParlayType.AB)
+                                {
+                                    <select name="result" class="form-select form-select-sm">
+                                        <option value="">-- Select --</option>
+                                        <option value="@item.OptionA" selected="@(item.CorrectAnswer == item.OptionA)">@item.OptionA</option>
+                                        <option value="@item.OptionB" selected="@(item.CorrectAnswer == item.OptionB)">@item.OptionB</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select name="result" class="form-select form-select-sm">
+                                        <option value="">-- Select --</option>
+                                        <option value="Over" selected="@(item.CorrectAnswer == "Over")">Over</option>
+                                        <option value="Under" selected="@(item.CorrectAnswer == "Under")">Under</option>
+                                    </select>
+                                }
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>
+                        @(item.IsResolved ? "Resolved" : "Pending")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
